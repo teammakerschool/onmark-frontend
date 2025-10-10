@@ -11,13 +11,14 @@
           </div>
           
           <NuxtLink to="/upload" class="btn btn-primary">
-            ➕ 새 사진 업로드
+            <PlusIcon class="header-icon" />
+            새 사진 업로드
           </NuxtLink>
         </div>
 
         <div class="stats">
           <div class="stat-card">
-            <div class="stat-icon">📸</div>
+            <PhotoIcon class="stat-icon" />
             <div class="stat-info">
               <h3>{{ photos.length }}</h3>
               <p>총 사진</p>
@@ -25,7 +26,7 @@
           </div>
           
           <div class="stat-card">
-            <div class="stat-icon">🔒</div>
+            <ShieldCheckIcon class="stat-icon" />
             <div class="stat-info">
               <h3>{{ photos.length }}</h3>
               <p>보호된 사진</p>
@@ -33,7 +34,7 @@
           </div>
           
           <div class="stat-card">
-            <div class="stat-icon">💾</div>
+            <CircleStackIcon class="stat-icon" />
             <div class="stat-info">
               <h3>{{ totalSize }}</h3>
               <p>총 용량</p>
@@ -50,10 +51,11 @@
           </div>
 
           <div v-else-if="photos.length === 0" class="empty-state">
-            <div class="empty-icon">📷</div>
+            <PhotoIcon class="empty-icon" />
             <h3>아직 업로드한 사진이 없습니다</h3>
             <p>첫 번째 사진을 업로드해보세요!</p>
             <NuxtLink to="/upload" class="btn btn-primary">
+              <CloudArrowUpIcon class="btn-icon" />
               사진 업로드하기
             </NuxtLink>
           </div>
@@ -74,6 +76,14 @@
 </template>
 
 <script setup>
+import { 
+  PhotoIcon, 
+  ShieldCheckIcon, 
+  CircleStackIcon,
+  PlusIcon,
+  CloudArrowUpIcon
+} from '@heroicons/vue/24/outline'
+
 const config = useRuntimeConfig()
 const router = useRouter()
 
@@ -156,10 +166,15 @@ const downloadPhoto = async (photo) => {
     const a = document.createElement('a')
     a.href = url
     a.download = photo.original_filename
+    a.style.display = 'none'
     document.body.appendChild(a)
     a.click()
-    document.body.removeChild(a)
-    window.URL.revokeObjectURL(url)
+    
+    // 정리
+    setTimeout(() => {
+      document.body.removeChild(a)
+      window.URL.revokeObjectURL(url)
+    }, 100)
   } catch (error) {
     alert('다운로드 실패')
     console.error(error)
@@ -190,6 +205,7 @@ const deletePhoto = async (photoId) => {
 
 <style scoped>
 .dashboard-page {
+  background: #0a0a0a;
   min-height: calc(100vh - 80px);
   padding: 40px 0;
 }
@@ -203,13 +219,24 @@ const deletePhoto = async (photoId) => {
 
 .dashboard-header h1 {
   font-size: 36px;
-  color: #1F2937;
+  color: #ffffff;
   margin-bottom: 8px;
 }
 
 .welcome-text {
-  color: #6B7280;
+  color: #999;
   font-size: 18px;
+}
+
+.header-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.dashboard-header .btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .stats {
@@ -220,35 +247,45 @@ const deletePhoto = async (photoId) => {
 }
 
 .stat-card {
-  background: white;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 20px;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  background: #222;
+  border-color: #3a3a3a;
+  transform: translateY(-2px);
 }
 
 .stat-icon {
-  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #ffffff;
+  flex-shrink: 0;
 }
 
 .stat-info h3 {
   font-size: 32px;
   font-weight: bold;
-  color: #1F2937;
+  color: #ffffff;
   margin-bottom: 4px;
 }
 
 .stat-info p {
-  color: #6B7280;
+  color: #999;
   font-size: 14px;
 }
 
 .photos-section h2 {
   font-size: 28px;
   margin-bottom: 24px;
-  color: #1F2937;
+  color: #ffffff;
 }
 
 .loading {
@@ -260,8 +297,8 @@ const deletePhoto = async (photoId) => {
   width: 50px;
   height: 50px;
   margin: 0 auto 20px;
-  border: 5px solid #E5E7EB;
-  border-top: 5px solid #4F46E5;
+  border: 5px solid #333;
+  border-top: 5px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -273,24 +310,38 @@ const deletePhoto = async (photoId) => {
 .empty-state {
   text-align: center;
   padding: 80px 20px;
-  background: white;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
 }
 
 .empty-icon {
-  font-size: 80px;
-  margin-bottom: 20px;
+  width: 80px;
+  height: 80px;
+  color: #555;
+  margin: 0 auto 20px;
 }
 
 .empty-state h3 {
   font-size: 24px;
-  color: #1F2937;
+  color: #ffffff;
   margin-bottom: 12px;
 }
 
 .empty-state p {
-  color: #6B7280;
+  color: #999;
   margin-bottom: 24px;
+}
+
+.empty-state .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .photos-grid {

@@ -9,12 +9,17 @@
         <div class="nav-links" v-if="isLoggedIn">
           <NuxtLink to="/dashboard" class="nav-link">대시보드</NuxtLink>
           <NuxtLink to="/upload" class="nav-link">업로드</NuxtLink>
-          <button @click="logout" class="btn btn-secondary btn-small">로그아웃</button>
+          <button @click="logout" class="btn btn-secondary btn-small">
+            <ArrowRightOnRectangleIcon class="icon" />
+            로그아웃
+          </button>
         </div>
 
         <div class="nav-links" v-else>
           <NuxtLink to="/login" class="nav-link">로그인</NuxtLink>
-          <NuxtLink to="/signup" class="btn btn-primary btn-small">시작하기</NuxtLink>
+          <NuxtLink to="/signup" class="btn btn-primary btn-small">
+            시작하기
+          </NuxtLink>
         </div>
       </div>
     </div>
@@ -22,6 +27,8 @@
 </template>
 
 <script setup>
+import { ArrowRightOnRectangleIcon } from '@heroicons/vue/24/outline'
+
 const router = useRouter()
 
 const isLoggedIn = ref(false)
@@ -84,5 +91,13 @@ const logout = () => {
 .btn-small {
   padding: 8px 20px;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
 }
 </style>

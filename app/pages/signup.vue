@@ -119,7 +119,7 @@ const handleSignup = async () => {
   background: #1a1a1a;
   border: 1px solid #2a2a2a;
   border-radius: 12px;
-  padding: 48px 40px;
+  padding: 48px 80px;
 }
 
 .auth-card h2 {

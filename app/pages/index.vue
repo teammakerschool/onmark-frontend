@@ -11,9 +11,11 @@
         
         <div class="hero-buttons">
           <NuxtLink to="/signup" class="btn btn-primary btn-large">
+            <RocketLaunchIcon class="icon" />
             시작하기
           </NuxtLink>
           <NuxtLink to="/login" class="btn btn-secondary btn-large">
+            <ArrowRightCircleIcon class="icon" />
             로그인
           </NuxtLink>
         </div>
@@ -26,7 +28,9 @@
         
         <div class="features-grid">
           <div class="feature-card">
-            <div class="feature-icon">🔒</div>
+            <div class="feature-icon-wrapper">
+              <ShieldCheckIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">안전한 보호</h3>
             <p class="feature-description">
               비가시성 워터마크 기술로 사진의 저작권을 보호하고, 
@@ -35,7 +39,9 @@
           </div>
           
           <div class="feature-card">
-            <div class="feature-icon">☁️</div>
+            <div class="feature-icon-wrapper">
+              <CloudArrowUpIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">클라우드 저장</h3>
             <p class="feature-description">
               안전한 클라우드 스토리지에 사진을 보관하고,
@@ -44,7 +50,9 @@
           </div>
           
           <div class="feature-card">
-            <div class="feature-icon">⚡</div>
+            <div class="feature-icon-wrapper">
+              <BoltIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">빠른 처리</h3>
             <p class="feature-description">
               업로드와 동시에 워터마크가 적용되며,
@@ -53,7 +61,9 @@
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">👤</div>
+            <div class="feature-icon-wrapper">
+              <UserCircleIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">개인 맞춤</h3>
             <p class="feature-description">
               개인 계정으로 사진을 관리하고,
@@ -62,7 +72,9 @@
           </div>
           
           <div class="feature-card">
-            <div class="feature-icon">🎯</div>
+            <div class="feature-icon-wrapper">
+              <CursorArrowRaysIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">간편한 사용</h3>
             <p class="feature-description">
               복잡한 설정 없이 드래그 앤 드롭만으로
@@ -71,7 +83,9 @@
           </div>
           
           <div class="feature-card">
-            <div class="feature-icon">🆓</div>
+            <div class="feature-icon-wrapper">
+              <SparklesIcon class="feature-icon" />
+            </div>
             <h3 class="feature-title">무료 서비스</h3>
             <p class="feature-description">
               모든 기능을 무료로 사용할 수 있으며,
@@ -85,6 +99,16 @@
 </template>
 
 <script setup>
+import { 
+  ShieldCheckIcon, 
+  CloudArrowUpIcon, 
+  BoltIcon,
+  UserCircleIcon,
+  CursorArrowRaysIcon,
+  SparklesIcon,
+  RocketLaunchIcon,
+  ArrowRightCircleIcon
+} from '@heroicons/vue/24/outline'
 </script>
 
 <style scoped>
@@ -123,6 +147,14 @@
 .btn-large {
   padding: 16px 32px;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 .features-section {
@@ -158,9 +190,14 @@
   transform: translateY(-4px);
 }
 
-.feature-icon {
-  font-size: 48px;
+.feature-icon-wrapper {
   margin-bottom: 24px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  color: #ffffff;
 }
 
 .feature-title {

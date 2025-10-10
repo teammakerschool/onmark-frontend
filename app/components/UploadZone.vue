@@ -15,18 +15,25 @@
     >
 
     <div class="upload-content">
-      <div class="upload-icon">📤</div>
+      <div class="upload-icon-wrapper">
+        <CloudArrowUpIcon class="upload-icon" />
+      </div>
       <h3>사진을 업로드하세요</h3>
       <p>드래그 앤 드롭 또는 클릭하여 선택</p>
       <button @click="$refs.fileInput.click()" class="btn btn-primary">
+        <PhotoIcon class="btn-icon" />
         파일 선택
       </button>
       
       <div v-if="selectedFile" class="selected-file">
-        <p>선택된 파일: {{ selectedFile.name }}</p>
-        <button @click="uploadFile" class="btn btn-primary">
-          업로드 시작
-        </button>
+        <DocumentCheckIcon class="file-icon" />
+        <div class="file-info">
+          <p class="file-name">{{ selectedFile.name }}</p>
+          <button @click="uploadFile" class="btn btn-primary btn-upload">
+            <ArrowUpTrayIcon class="btn-icon" />
+            업로드 시작
+          </button>
+        </div>
       </div>
 
       <div v-if="uploading" class="upload-progress">
@@ -38,6 +45,13 @@
 </template>
 
 <script setup>
+import { 
+  CloudArrowUpIcon, 
+  PhotoIcon,
+  DocumentCheckIcon,
+  ArrowUpTrayIcon
+} from '@heroicons/vue/24/outline'
+
 const emit = defineEmits(['upload-success'])
 
 const fileInput = ref(null)
@@ -47,7 +61,6 @@ const uploading = ref(false)
 
 const config = useRuntimeConfig()
 
-// 파일 선택
 const handleFileSelect = (event) => {
   const file = event.target.files[0]
   if (file && file.type.startsWith('image/')) {
@@ -57,7 +70,6 @@ const handleFileSelect = (event) => {
   }
 }
 
-// 드래그 앤 드롭
 const handleDrop = (event) => {
   isDragging.value = false
   const file = event.dataTransfer.files[0]
@@ -68,7 +80,6 @@ const handleDrop = (event) => {
   }
 }
 
-// 업로드
 const uploadFile = async () => {
   if (!selectedFile.value) return
 
@@ -111,18 +122,18 @@ const uploadFile = async () => {
 
 <style scoped>
 .upload-zone {
-  border: 3px dashed #D1D5DB;
+  border: 3px dashed #333;
   border-radius: 12px;
   padding: 60px 40px;
   text-align: center;
-  background: white;
+  background: #1a1a1a;
   transition: all 0.3s;
   cursor: pointer;
 }
 
 .upload-zone.dragging {
-  border-color: #4F46E5;
-  background: #EEF2FF;
+  border-color: #555;
+  background: #222;
 }
 
 .upload-content {
@@ -133,48 +144,82 @@ const uploadFile = async () => {
   pointer-events: all;
 }
 
+.upload-icon-wrapper {
+  margin-bottom: 24px;
+}
+
 .upload-icon {
-  font-size: 64px;
-  margin-bottom: 20px;
+  width: 64px;
+  height: 64px;
+  color: #999;
+  margin: 0 auto;
 }
 
 .upload-zone h3 {
   font-size: 24px;
   margin-bottom: 12px;
-  color: #1F2937;
+  color: #ffffff;
 }
 
 .upload-zone p {
-  color: #6B7280;
+  color: #999;
   margin-bottom: 24px;
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .selected-file {
   margin-top: 24px;
   padding: 20px;
-  background: #F3F4F6;
+  background: #0a0a0a;
   border-radius: 8px;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.selected-file p {
+.file-icon {
+  width: 40px;
+  height: 40px;
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+.file-info {
+  flex: 1;
+  text-align: left;
+}
+
+.file-name {
   margin-bottom: 12px;
-  color: #374151;
+  color: #ffffff;
   font-weight: 500;
+}
+
+.btn-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .upload-progress {
   margin-top: 24px;
   padding: 20px;
-  background: #EEF2FF;
+  background: #0a0a0a;
   border-radius: 8px;
+  border: 1px solid #2a2a2a;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
   margin: 0 auto 12px;
-  border: 4px solid #E5E7EB;
-  border-top: 4px solid #4F46E5;
+  border: 4px solid #333;
+  border-top: 4px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

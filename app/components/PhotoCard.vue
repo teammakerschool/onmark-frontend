@@ -3,29 +3,45 @@
     <div class="photo-thumbnail">
       <img :src="thumbnailUrl" :alt="photo.original_filename" />
       <div class="watermark-badge">
-        <span class="badge-icon">🔒</span>
+        <LockClosedIcon class="badge-icon" />
         워터마크 보호됨
       </div>
     </div>
     
     <div class="photo-info">
       <h4 class="photo-name">{{ photo.original_filename }}</h4>
-      <p class="photo-date">{{ formatDate(photo.upload_date) }}</p>
-      <p class="photo-size">{{ formatSize(photo.file_size) }}</p>
+      <p class="photo-date">
+        <CalendarIcon class="info-icon" />
+        {{ formatDate(photo.upload_date) }}
+      </p>
+      <p class="photo-size">
+        <DocumentIcon class="info-icon" />
+        {{ formatSize(photo.file_size) }}
+      </p>
     </div>
 
     <div class="photo-actions">
       <button @click="downloadPhoto" class="btn-action btn-download">
-        📥 다운로드
+        <ArrowDownTrayIcon class="action-icon" />
+        다운로드
       </button>
       <button @click="deletePhoto" class="btn-action btn-delete">
-        🗑️ 삭제
+        <TrashIcon class="action-icon" />
+        삭제
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { 
+  LockClosedIcon, 
+  CalendarIcon, 
+  DocumentIcon,
+  ArrowDownTrayIcon,
+  TrashIcon
+} from '@heroicons/vue/24/outline'
+
 const props = defineProps({
   photo: {
     type: Object,
@@ -37,12 +53,10 @@ const emit = defineEmits(['delete', 'download'])
 
 const config = useRuntimeConfig()
 
-// 썸네일 URL
 const thumbnailUrl = computed(() => {
   return `${config.public.apiBase}/uploads/photos/${props.photo.stored_filename}`
 })
 
-// 날짜 포맷
 const formatDate = (dateString) => {
   const date = new Date(dateString)
   return date.toLocaleDateString('ko-KR', {
@@ -52,19 +66,16 @@ const formatDate = (dateString) => {
   })
 }
 
-// 파일 크기 포맷
 const formatSize = (bytes) => {
   if (bytes < 1024) return bytes + ' B'
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
   return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
 }
 
-// 다운로드
 const downloadPhoto = () => {
   emit('download', props.photo)
 }
 
-// 삭제
 const deletePhoto = () => {
   if (confirm('정말 이 사진을 삭제하시겠습니까?')) {
     emit('delete', props.photo.id)
@@ -74,16 +85,17 @@ const deletePhoto = () => {
 
 <style scoped>
 .photo-card {
-  background: white;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: all 0.3s;
 }
 
 .photo-card:hover {
+  background: #222;
+  border-color: #3a3a3a;
   transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .photo-thumbnail {
@@ -91,7 +103,7 @@ const deletePhoto = () => {
   width: 100%;
   height: 200px;
   overflow: hidden;
-  background: #f3f4f6;
+  background: #0a0a0a;
 }
 
 .photo-thumbnail img {
@@ -116,7 +128,8 @@ const deletePhoto = () => {
 }
 
 .badge-icon {
-  font-size: 14px;
+  width: 14px;
+  height: 14px;
 }
 
 .photo-info {
@@ -126,8 +139,8 @@ const deletePhoto = () => {
 .photo-name {
   font-size: 16px;
   font-weight: 600;
-  color: #1F2937;
-  margin-bottom: 8px;
+  color: #ffffff;
+  margin-bottom: 12px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -135,8 +148,16 @@ const deletePhoto = () => {
 
 .photo-date, .photo-size {
   font-size: 14px;
-  color: #6B7280;
-  margin-bottom: 4px;
+  color: #999;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
 }
 
 .photo-actions {
@@ -154,23 +175,32 @@ const deletePhoto = () => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.action-icon {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-download {
-  background: #4F46E5;
-  color: white;
+  background: #ffffff;
+  color: #0a0a0a;
 }
 
 .btn-download:hover {
-  background: #4338CA;
+  background: #e5e5e5;
 }
 
 .btn-delete {
-  background: #EF4444;
+  background: #dc2626;
   color: white;
 }
 
 .btn-delete:hover {
-  background: #DC2626;
+  background: #b91c1c;
 }
 </style>
