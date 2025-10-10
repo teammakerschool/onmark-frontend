@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="auth-page">
     <Navbar />
     
-    <div class="auth-page">
+    <div class="auth-container">
       <div class="container">
-        <div class="auth-card card">
+        <div class="auth-card">
           <h2>로그인</h2>
-          <p class="subtitle">다시 만나서 반가워요!</p>
+          <p class="subtitle">다시 만나서 반가워요</p>
 
           <form @submit.prevent="handleLogin">
             <div class="form-group">
@@ -80,7 +80,6 @@ const handleLogin = async () => {
       return
     }
 
-    // 토큰과 사용자 정보 저장
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
 
@@ -93,8 +92,13 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-/* signup.vue와 동일한 스타일 사용 */
+/* signup.vue와 동일한 스타일 */
 .auth-page {
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.auth-container {
   min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
@@ -104,46 +108,56 @@ const handleLogin = async () => {
 .auth-card {
   max-width: 450px;
   margin: 0 auto;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 48px 40px;
 }
 
 .auth-card h2 {
   font-size: 32px;
   margin-bottom: 8px;
-  color: #1F2937;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .subtitle {
-  color: #6B7280;
-  margin-bottom: 30px;
+  color: #999;
+  margin-bottom: 32px;
+  font-size: 15px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
-  color: #374151;
+  color: #e5e5e5;
+  font-size: 14px;
 }
 
 .error-message {
-  background: #FEE2E2;
-  color: #DC2626;
+  background: #2a1a1a;
+  color: #ff6b6b;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 20px;
+  border: 1px solid #3a2a2a;
+  font-size: 14px;
 }
 
 .switch-auth {
   text-align: center;
-  margin-top: 20px;
-  color: #6B7280;
+  margin-top: 24px;
+  color: #999;
+  font-size: 14px;
 }
 
 .switch-auth a {
-  color: #4F46E5;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
 }

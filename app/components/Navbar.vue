@@ -3,19 +3,18 @@
     <div class="container">
       <div class="navbar-content">
         <NuxtLink to="/" class="logo">
-          <span class="logo-icon">🖼️</span>
           <span class="logo-text">OnMark</span>
         </NuxtLink>
 
         <div class="nav-links" v-if="isLoggedIn">
           <NuxtLink to="/dashboard" class="nav-link">대시보드</NuxtLink>
           <NuxtLink to="/upload" class="nav-link">업로드</NuxtLink>
-          <button @click="logout" class="btn btn-secondary">로그아웃</button>
+          <button @click="logout" class="btn btn-secondary btn-small">로그아웃</button>
         </div>
 
         <div class="nav-links" v-else>
           <NuxtLink to="/login" class="nav-link">로그인</NuxtLink>
-          <NuxtLink to="/signup" class="btn btn-primary">회원가입</NuxtLink>
+          <NuxtLink to="/signup" class="btn btn-primary btn-small">시작하기</NuxtLink>
         </div>
       </div>
     </div>
@@ -25,7 +24,6 @@
 <script setup>
 const router = useRouter()
 
-// 로그인 상태 확인 (localStorage 사용)
 const isLoggedIn = ref(false)
 
 onMounted(() => {
@@ -42,9 +40,10 @@ const logout = () => {
 
 <style scoped>
 .navbar {
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px 0;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #2a2a2a;
+  padding: 20px 0;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -57,33 +56,33 @@ const logout = () => {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   text-decoration: none;
   font-size: 24px;
   font-weight: bold;
-  color: #4F46E5;
-}
-
-.logo-icon {
-  font-size: 32px;
+  color: #ffffff;
+  letter-spacing: -0.5px;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 32px;
 }
 
 .nav-link {
   text-decoration: none;
-  color: #4B5563;
+  color: #999;
   font-weight: 500;
   transition: color 0.3s;
+  font-size: 15px;
 }
 
 .nav-link:hover {
-  color: #4F46E5;
+  color: #ffffff;
+}
+
+.btn-small {
+  padding: 8px 20px;
+  font-size: 14px;
 }
 </style>
