@@ -121,7 +121,7 @@ const deletePhoto = async (photoId) => {
       fetchRecentPhotos()
     }
   } catch (error) {
-    alert('삭제 실패')
+    alert('505 : 삭제 실패')
   }
 }
 </script>

@@ -59,7 +59,7 @@
               즉시 다운로드하여 사용할 수 있습니다.
             </p>
           </div>
-
+        
           <div class="feature-card">
             <div class="feature-icon-wrapper">
               <UserCircleIcon class="feature-icon" />
